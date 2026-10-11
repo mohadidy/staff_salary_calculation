@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#153b63">
+  <meta name="description" content="حاسبة الراتب الجديد للمعيد والمدرس المساعد بكلية الهندسة فقط وفقًا للراتب القديم وسنوات الخبرة وأيام الحضور الأسبوعي.">
+  <title>حاسبة الراتب الجديد | الهيئة المعاونة</title>
+  <style>
+    :root{font-family:Tahoma,"Segoe UI",Arial,sans-serif;color:#17324c;background:#f2f6fa;font-synthesis:none}
+    *{box-sizing:border-box}body{margin:0;min-height:100vh;background:radial-gradient(circle at 90% 0%,#dceaf6 0,transparent 37%),#f2f6fa;line-height:1.65}
+    .container{width:min(100% - 32px,840px);margin:0 auto;padding:44px 0 55px}
+    .header{text-align:center;margin-bottom:28px}.mark{width:66px;height:66px;border-radius:20px;display:grid;place-items:center;background:#153b63;color:white;font-size:31px;margin:0 auto 15px;box-shadow:0 12px 25px #153b632a}
+    h1{font-size:clamp(1.55rem,4vw,2.2rem);margin:0;color:#153b63} .subtitle{color:#63798c;margin:8px auto 0;max-width:590px}
+    .panel{background:white;border:1px solid #e3ebf2;border-radius:22px;box-shadow:0 18px 45px #1f46640d;padding:clamp(20px,4vw,36px)}
+    .section-heading{display:flex;align-items:center;gap:10px;font-size:1.1rem;margin:0 0 22px;color:#183e62}.section-heading::before{content:"";width:5px;height:22px;border-radius:5px;background:#11a89e}
+    .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px}.field{min-width:0}.field.full{grid-column:1/-1}
+    label,.field-title{display:block;font-weight:700;font-size:.95rem;margin:0 0 9px} .hint{display:block;font-size:.78rem;font-weight:400;color:#728598;margin-top:2px}
+    .input,.select{appearance:none;width:100%;border:1.5px solid #d7e2ec;border-radius:12px;background:#fcfdff;color:#17324c;font:inherit;padding:13px 15px;min-height:52px;transition:border-color .2s,box-shadow .2s}
+    .select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2365798a' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");background-position:left 17px center;background-repeat:no-repeat;padding-left:42px}
+    .input:focus,.select:focus{outline:none;border-color:#11a89e;box-shadow:0 0 0 4px #11a89e20}.input[aria-invalid="true"]{border-color:#c24141}
+    .options{display:grid;grid-template-columns:1fr 1fr;gap:12px}.option{position:relative;cursor:pointer}.option input{position:absolute;opacity:0;width:1px;height:1px}.option span{min-height:64px;display:flex;flex-direction:column;justify-content:center;align-items:center;border:1.5px solid #d7e2ec;border-radius:12px;transition:.2s;background:#fcfdff;font-weight:700}.option small{font-weight:400;color:#718397}.option input:checked+span{border-color:#0c9f96;background:#e9f8f6;color:#087b74}.option input:focus-visible+span{outline:3px solid #0c9f9680;outline-offset:3px}
+    .actions{display:flex;gap:12px;margin-top:27px}.btn{font:inherit;font-weight:700;border-radius:12px;border:0;cursor:pointer;min-height:51px;padding:11px 20px;transition:transform .15s,background .15s}.btn:active{transform:translateY(1px)}.primary{flex:1;background:#153b63;color:#fff}.primary:hover{background:#0e2c4b}.secondary{background:#edf2f7;color:#344e66}.secondary:hover{background:#dfe8ef}
+    .error{color:#ad3030;background:#fff1f1;border:1px solid #ffd1d1;padding:12px 15px;border-radius:10px;margin-top:17px;font-size:.9rem}
+    [hidden]{display:none!important}.result{margin-top:25px;animation:appear .3s ease}@keyframes appear{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:translateY(0)}}
+    .result-hero{text-align:center;border-radius:18px;background:linear-gradient(125deg,#153b63,#205b80);padding:29px 18px;color:#fff}.result-hero .eyebrow{font-size:.95rem;opacity:.87}.amount{display:flex;align-items:baseline;justify-content:center;flex-wrap:wrap;gap:9px;margin:8px 0;font-size:clamp(2rem,6vw,3.2rem);font-weight:800;line-height:1.35}.amount .currency{font-size:1rem;font-weight:500}.result-hero p{margin:5px 0 0;opacity:.85;font-size:.86rem}
+    
+    .note{color:#718296;text-align:center;font-size:.81rem;margin:22px auto 0;max-width:650px}.footer{text-align:center;color:#8090a0;font-size:.76rem;margin-top:23px}
+    @media(max-width:600px){.container{padding-top:25px;width:min(100% - 24px,840px)}.grid{grid-template-columns:1fr;gap:17px}.field.full{grid-column:auto}.panel{border-radius:16px}.actions{flex-direction:column}.actions .btn{width:100%}.options{gap:8px}.option span{min-height:61px}.header{margin-bottom:20px}}
+    @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+  </style>
+</head>
+<body>
+  <main class="container">
+    <header class="header">
+      <div class="mark" aria-hidden="true">▦</div>
+      <h1>حاسبة الراتب الجديد</h1>
+      <p class="subtitle">احسب راتبك الجديد لأعضاء الهيئة المعاونة بكلية الهندسة فقط، بناءً على الدرجة الوظيفية وسنوات الخبرة وأيام الحضور الأسبوعي.</p>
+    </header>
+
+    <section class="panel" aria-labelledby="form-title">
+      <h2 class="section-heading" id="form-title">بيانات حساب الراتب</h2>
+      <form id="salaryForm" novalidate>
+        <div class="grid">
+          <div class="field">
+            <label for="jobTitle">الوظيفة</label>
+            <select id="jobTitle" class="select" name="jobTitle" required>
+              <option value="assistant">معيد</option>
+              <option value="lecturer">مدرس مساعد</option>
+            </select>
+          </div>
+          <div class="field">
+            <span class="field-title" id="attendance-label">الحضور الأسبوعي</span>
+            <div class="options" role="radiogroup" aria-labelledby="attendance-label">
+              <label class="option"><input type="radio" name="attendance" value="A" checked><span>4 أيام <small>الخيار</small></span></label>
+              <label class="option"><input type="radio" name="attendance" value="B"><span>5 أيام <small>الخيار</small></span></label>
+            </div>
+          </div>
+          <div class="field full">
+            <label for="oldSalary">الراتب القديم<small class="hint">بالجنيه المصري</small></label>
+            <input class="input" id="oldSalary" name="oldSalary" type="number" min="0" step="any" inputmode="decimal" placeholder="مثال: 12000" required>
+          </div>
+          <div class="field" id="assistantYearsField">
+            <label for="assistantYears">سنوات الخبرة كمعيد</label>
+            <input class="input" id="assistantYears" name="assistantYears" type="number" min="0" step="1" inputmode="numeric" placeholder="مثال: 3" required>
+          </div>
+          <div class="field" id="lecturerYearsField" hidden>
+            <label for="lecturerYears">سنوات الخبرة كمدرس مساعد</label>
+            <input class="input" id="lecturerYears" name="lecturerYears" type="number" min="0" step="1" inputmode="numeric" placeholder="مثال: 2" disabled>
+          </div>
+        </div>
+        <div class="actions">
+          <button class="btn primary" type="submit">احسب الراتب الجديد ←</button>
+          <button class="btn secondary" type="reset">إعادة تعيين</button>
+        </div>
+        <div id="error" class="error" role="alert" hidden></div>
+      </form>
+
+      <section class="result" id="resultSection" aria-label="نتيجة حساب الراتب" aria-live="polite" hidden>
+        <div class="result-hero">
+          <div class="eyebrow">الراتب الجديد المتوقع</div>
+          <div class="amount"><span id="finalSalary" dir="ltr">0.00</span><span class="currency">جنيه مصري</span></div>
+          <p id="resultCaption"></p>
+        </div>
+</section>
+    </section>
+    <p class="note">النتائج حسابية وتقديرية وفقًا للمعادلات المدخلة، ولا تمثل تأكيدًا رسميًا للراتب أو الاستحقاقات.</p>
+    <footer class="footer">حاسبة الراتب الجديد </footer>
+  </main>
+
+  <script>
+    "use strict";
+    const form = document.getElementById("salaryForm");
+    const jobTitle = document.getElementById("jobTitle");
+    const oldSalary = document.getElementById("oldSalary");
+    const assistantYears = document.getElementById("assistantYears");
+    const lecturerYears = document.getElementById("lecturerYears");
+    const lecturerYearsField = document.getElementById("lecturerYearsField");
+    const resultSection = document.getElementById("resultSection");
+    const error = document.getElementById("error");
+    const currency = new Intl.NumberFormat("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    const format = value => currency.format(value) + " ج.م";
+
+    function calculateSalary(job, attendance, X, y, z = 0) {
+      if (!["assistant", "lecturer"].includes(job) || !["A", "B"].includes(attendance) ||
+          !Number.isFinite(X) || X < 0 || !Number.isSafeInteger(y) || y < 0 ||
+          !Number.isSafeInteger(z) || z < 0) {
+        throw new Error("يرجى إدخال بيانات صحيحة لإتمام الحساب.");
+      }
+      const C = X * 0.07;
+      const experience = y * 500 + (job === "lecturer" ? z * 700 : 0);
+      const D = C + experience;
+      const fixed = job === "assistant" ? 13000 : 15000;
+      const F = D + fixed;
+      const G = F / 30;
+      const H = G * 26;
+      const result = attendance === "A" ? H : F;
+      if (!Number.isFinite(result)) throw new Error("القيم المدخلة كبيرة جدًا، يرجى مراجعتها.");
+      return { C, D, F, G, H, experience, fixed, result };
+    }
+
+    function clearOutput() {
+      resultSection.hidden = true;
+      error.hidden = true;
+      error.textContent = "";
+      [oldSalary, assistantYears, lecturerYears].forEach(element => element.removeAttribute("aria-invalid"));
+    }
+
+    function updateJobFields() {
+      const show = jobTitle.value === "lecturer";
+      lecturerYearsField.hidden = !show;
+      lecturerYears.disabled = !show;
+      lecturerYears.required = show;
+      clearOutput();
+    }
+
+    function validateNumber(input, label, integerOnly = false) {
+      const text = input.value.trim();
+      const value = input.valueAsNumber;
+      if (text === "" || !Number.isFinite(value) || value < 0 || (integerOnly && !Number.isSafeInteger(value))) {
+        input.setAttribute("aria-invalid", "true");
+        throw new Error(`يرجى إدخال ${label} بشكل صحيح${integerOnly ? " (عدد صحيح لا يقل عن صفر)" : " (رقم لا يقل عن صفر)"}.`);
+      }
+      return value;
+    }
+
+    jobTitle.addEventListener("change", updateJobFields);
+    form.addEventListener("input", clearOutput);
+    form.addEventListener("change", clearOutput);
+    form.addEventListener("reset", () => {
+      // Resetting form controls is completed after the reset event.
+      queueMicrotask(updateJobFields);
+    });
+
+    form.addEventListener("submit", event => {
+      event.preventDefault();
+      clearOutput();
+      try {
+        const job = jobTitle.value;
+        const attendance = form.elements.attendance.value;
+        const X = validateNumber(oldSalary, "الراتب القديم");
+        const y = validateNumber(assistantYears, "سنوات الخبرة كمعيد", true);
+        const z = job === "lecturer" ? validateNumber(lecturerYears, "سنوات الخبرة كمدرس مساعد", true) : 0;
+        const values = calculateSalary(job, attendance, X, y, z);
+
+        document.getElementById("finalSalary").textContent = currency.format(values.result);
+        document.getElementById("resultCaption").textContent = `${job === "assistant" ? "معيد" : "مدرس مساعد"} • حضور ${attendance === "A" ? "4" : "5"} أيام أسبوعيًا`;
+
+
+
+
+
+
+
+        resultSection.hidden = false;
+      } catch (err) {
+        error.textContent = err.message;
+        error.hidden = false;
+      }
+    });
+    updateJobFields();
+  </script>
+</body>
+</html>
